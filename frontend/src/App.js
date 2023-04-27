@@ -13,6 +13,7 @@ function App() {
       <Home/>
       <AboutUs/>
       <Contact/>
+      <Contact/>
       <Footer />
       <Footer />
       <SinglePost/>
