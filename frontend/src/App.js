@@ -14,6 +14,7 @@ function App() {
       <AboutUs/>
       <Contact/>
       <Footer />
+      <Footer />
       <SinglePost/>
     </>
   );
