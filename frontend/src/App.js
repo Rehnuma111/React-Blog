@@ -17,6 +17,7 @@ function App() {
       <Footer />
       <Footer />
       <SinglePost/>
+      <SinglePost/>
     </>
   );
 }
