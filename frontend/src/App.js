@@ -16,6 +16,7 @@ function App() {
       <Contact/>
       <Footer />
       <SinglePost/>
+      <SinglePost/>
     </>
   );
 }
