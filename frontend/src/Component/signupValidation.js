@@ -5,7 +5,7 @@ const passwordRegExp =
 
 export const signUpSchema = Yup.object({
   name: Yup.string()
-    .min(4, "Name must be between 4 to 25 characters !")
+    .min(2, "Name must be between 4 to 25 characters !")
     .max(25, "Name must be between 4 to 25 characters !")
     .required("Required field !"),
   email: Yup.string()
