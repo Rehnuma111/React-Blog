@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.3",
     "formik": "^2.2.9",
+    "jodit-react": "^1.3.39",
     "mdb-ui-kit": "^6.2.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
@@ -16,7 +17,8 @@
     "react-scripts": "5.0.1",
     "scss": "^0.2.4",
     "styled-components": "^5.3.10",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
