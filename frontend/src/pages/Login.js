@@ -18,7 +18,7 @@ const Login = () => {
         action.resetForm();
       },
     });
-    console.log(values);
+  console.log(values);
   console.log(errors);
   return (
     <div>
@@ -31,7 +31,11 @@ const Login = () => {
                 <p>Please enter your credentials to login.</p>
               </div>
             </div>
-            <form autoComplete="off"  onSubmit={handleSubmit}   className="login-form">
+            <form
+              autoComplete="off"
+              onSubmit={handleSubmit}
+              className="login-form"
+            >
               <input
                 type="text"
                 placeholder="username"
@@ -42,9 +46,7 @@ const Login = () => {
                 onBlur={handleBlur}
               />
               {errors.email && touched.email ? (
-                <p style={{ color: "red" }}>
-                  {errors.email}
-                </p>
+                <p style={{ color: "red" }}>{errors.email}</p>
               ) : null}
               <input
                 type="password"
@@ -56,9 +58,7 @@ const Login = () => {
                 onBlur={handleBlur}
               />
               {errors.password && touched.password ? (
-                <p style={{ color: "red"  }}>
-                  {errors.password}
-                </p>
+                <p style={{ color: "red" }}>{errors.password}</p>
               ) : null}
               <button>login</button>
               <p className="message">

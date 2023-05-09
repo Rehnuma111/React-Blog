@@ -21,12 +21,25 @@ const BlogPost = () => {
             </div>
             <div>
               <label className="post-label">Description</label>
-              <JoditEditor
+              {/* <JoditEditor
                 ref={editor}
                 value={content}
                 tabIndex={5}
-                onChange={(newContent) => {}}
+                onChange={(newContent) => {
+                  console.log(newContent);
+                  setContent(newContent);
+                }}
+              /> */}
+              <div dangerouslySetInnerHTML={{ __html: content }}></div>
+              <JoditEditor
+                ref={editor}
+                tabIndex={5}
+                onChange={(newContent) => {
+                  console.log(newContent);
+                  setContent(newContent);
+                }}
               />
+
               {/* <textarea
                 className="blog_input"
                 rows="6"
@@ -49,8 +62,8 @@ const BlogPost = () => {
             <div>
               <label className="post-label">Category</label>
               <select className="blog_input">
-                <option>Business</option>
-                <option>Culture</option>
+                <option>Programming</option>
+                <option>ComputerProgramming</option>
                 <option>Technical</option>
                 <option>Lifestyle</option>
                 <option>News</option>
@@ -59,7 +72,7 @@ const BlogPost = () => {
               </select>
             </div>
             <div>
-              <button>Submit</button>
+              <button className="btn-post">Submit</button>
             </div>
           </form>
         </div>

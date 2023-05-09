@@ -33,6 +33,9 @@ const Header = () => {
               <li>
                 <Link to="/blogpost">Write</Link>
               </li>
+              <li>
+                <Link to="/profile">Profile</Link>
+              </li>
             </ul>
           </nav>
 
