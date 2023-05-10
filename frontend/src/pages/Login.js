@@ -2,24 +2,59 @@ import { useFormik } from "formik";
 import React from "react";
 import styled from "styled-components";
 import { loginSchema } from "../Component/loginValidation";
+import axios from "axios";
+import app_config from "../config";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+const url = app_config.app_url;
+
 const initialValues = {
   email: "",
   password: "",
 };
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const formSubmit = (values) => {
+    console.log("abhbsh", values);
+    axios
+      .post(url + "/user/login", values)
+      .then((response) => {
+        console.log("res", response);
+        if (response.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "You have login Successfully!",
+          });
+          // console.log("hbxhsvch" ,response.data.user);
+          const data = response.data.user;
+          localStorage.setItem("user", JSON.stringify(data));
+          navigate("/");
+        }
+      })
+      .catch((er) => {
+        console.log(er);
+        console.log(er.response.status);
+        if (er.response.status === 401) {
+          Swal.fire({
+            icon: "error",
+            title: "Failed",
+            text: "Email or password is in correct!",
+          });
+        }
+      });
+  };
+
   const { errors, values, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: loginSchema,
-      onSubmit: (values, action) => {
-        console.log(values);
-        console.log("chal rha hai");
-        action.resetForm();
-      },
+      onSubmit: formSubmit,
     });
-  console.log(values);
-  console.log(errors);
+  // console.log(values);
+  // console.log(errors);
   return (
     <div>
       <Wrapper>

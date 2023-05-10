@@ -2,6 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { useFormik } from "formik";
 import { signUpSchema } from "../Component/signupValidation";
+import app_config from "../config";
+import axios from "axios";
+import Swal from "sweetalert2";
+
+const url = app_config.app_url;
 
 const initialValues = {
   name: "",
@@ -11,18 +16,40 @@ const initialValues = {
 };
 
 const Signup = () => {
-  const { errors ,values, touched, handleBlur, handleChange, handleSubmit } = useFormik(
-    {
+  const formSubmit = (values) => {
+    // console.log("bhvcv", values);
+    axios
+      .post(url + "/user/register", values)
+      .then((res) => {
+        console.log("response", res)
+        if(res.request.status ===  200){
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Registered Successfully!",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log("err", err);
+        console.log("status", err);
+        if(err.response.status === 409){
+          Swal.fire({
+            icon:"error",
+            title:"Failed",
+            text:"Email is already exist!"
+          })
+        }
+      });
+  };
+
+  const { errors, values, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
       initialValues,
       validationSchema: signUpSchema,
-      onSubmit: (values, action) => {
-        console.log(values);
-        console.log("chal rha hai")
-        action.resetForm();
-      },
-    }
-  );
-  console.log(errors);
+      onSubmit: formSubmit,
+    });
+  // console.log(errors);
 
   return (
     <div className="card">
@@ -36,18 +63,17 @@ const Signup = () => {
               <b>Name</b>
             </label>
             <input
-              
               type="text"
               placeholder="Enter Name"
               name="name"
-              id="name"  
+              id="name"
               value={values.name}
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {
-              errors.name&&touched.name?<p style={{color:"red" , marginTop:"-1rem"}}>{errors.name}</p>:null
-            }
+            {errors.name && touched.name ? (
+              <p style={{ color: "red", marginTop: "-1rem" }}>{errors.name}</p>
+            ) : null}
 
             <label htmlFor="email">
               <b>Email</b>
@@ -57,14 +83,13 @@ const Signup = () => {
               placeholder="Enter Email"
               name="email"
               id="email"
-              
               value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {
-              errors.email&&touched.email?<p style={{color:"red" , marginTop:"-1rem"}}>{errors.email}</p>:null
-            }
+            {errors.email && touched.email ? (
+              <p style={{ color: "red", marginTop: "-1rem" }}>{errors.email}</p>
+            ) : null}
             <label htmlFor="psw">
               <b>Password</b>
             </label>
@@ -77,9 +102,11 @@ const Signup = () => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {
-              errors.password&&touched.password?<p style={{color:"red" , marginTop:"-1rem"}}>{errors.password}</p>:null
-            }
+            {errors.password && touched.password ? (
+              <p style={{ color: "red", marginTop: "-1rem" }}>
+                {errors.password}
+              </p>
+            ) : null}
             <label htmlFor="psw-repeat">
               <b>Repeat Password</b>
             </label>
@@ -92,9 +119,11 @@ const Signup = () => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {
-              errors.confirm_password&&touched.confirm_password?<p style={{color:"red" , marginTop:"-1rem"}}>{errors.confirm_password}</p>:null
-            }
+            {errors.confirm_password && touched.confirm_password ? (
+              <p style={{ color: "red", marginTop: "-1rem" }}>
+                {errors.confirm_password}
+              </p>
+            ) : null}
             <hr />
             <p>
               By creating an account you agree to our{" "}
@@ -126,7 +155,7 @@ const Wrapper = styled.main`
   .container {
     padding: 2rem;
     margin: 5rem auto;
-    
+
     width: 50%;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
   }
@@ -140,7 +169,6 @@ const Wrapper = styled.main`
     display: inline-block;
     border: none;
     background: #f1f1f1;
-   
   }
 
   input[type="text"]:focus,

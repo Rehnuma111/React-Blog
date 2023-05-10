@@ -13,7 +13,6 @@
 .post_card p {
   font-size: 2rem;
   font-weight: 3rem;
-  
 }
 .input-field {
   width: 50vw;
@@ -29,33 +28,54 @@
   flex-direction: column;
 }
 .blog_input {
-   /* width:250%; */
-   width: 100%;
-    border: 2px solid black;
-    border-radius: 0.3rem;
-    padding:5px;
-
+  /* width:250%; */
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 0.3rem;
+  padding: 5px;
 }
-.btn-post{
+.btn-post {
   margin-top: 5px;
   background-color: aqua;
   width: 150px;
   padding: 2px;
   border-radius: 0.3rem;
-  color:white;
+  color: white;
   border: none;
   height: 2rem;
 }
 /* 
 user profile code */
-.user_form{
+.user_form {
   display: flex;
-  align-items: center;
-  justify-content: center ;
+  align-items: start;
+  justify-content: center;
   flex-direction: column;
-  row-gap:1em ;
+  row-gap: 1em;
+  margin-right: 0;
 }
-.user_profile_image{
+.user_profile_image {
   text-align: center;
-  margin:auto;
+  margin: auto;
+}
+.user_form label {
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  font-size: 20px;
+}
+.user_form input {
+  width: 100%;
+  border-radius: 0.5rem;
+  /* border: none; */
+  padding: 0.5rem;
+
+}
+.btn_profile{
+  border: 2px solid rgb(237, 9, 9);
+  width: 300%; 
+  color: white;
+  background-color: blueviolet;
+  border: none;
+  border-radius: 1rem;
+  
 }
