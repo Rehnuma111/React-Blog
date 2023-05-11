@@ -1,135 +1,22 @@
-// import "../styles/blogpost.css";
-// import React, { useState, useRef, useMemo } from "react";
-// import JoditEditor from "jodit-react";
-// import { useFormik } from "formik";
-
-// const BlogPost = () => {
-
-//   const [currentUser, setCurrentUser] = useState(
-//     JSON.parse(sessionStorage.getItem("user"))
-//   );
-//   const blogData = {
-//     title: "",
-//     content: "",
-//     // author: currentUser._id,
-//     tags: "",
-//   };
-
-//  const blogSubmit = (values)=>{
-//   console.log(values)
-//  }
-
-//   const { values, handleSubmit, handleChange } = useFormik({
-//     blogData,
-//     onSubmit: blogSubmit,
-//   });
-
-//   const editor = useRef(null);
-//   const [content, setContent] = useState("");
-
-//   return (
-//     <>
-//       <div className="post_container">
-//         <div className="post_card">
-//           <p>What is Going in your mind ?</p>
-//           <form className="blog-form" onSubmit={handleSubmit}>
-//             <div>
-//               <label className="post-label">Title</label>
-//               <input
-//                 className="blog_input"
-//                 type="text"
-//                 placeholder="Enter Title"
-//                 id="title"
-//                 value={values.title}
-//                 onChange={handleChange}
-
-//               />
-//             </div>
-//             <div>
-//               <label className="post-label">Description</label>
-//               {/* <JoditEditor
-//                 ref={editor}
-//                 value={content}
-//                 tabIndex={5}
-//                 onChange={(newContent) => {
-//                   console.log(newContent);
-//                   setContent(newContent);
-//                 }}
-//               /> */}
-//               <div dangerouslySetInnerHTML={{ __html: content }}></div>
-//               <JoditEditor
-//                 ref={editor}
-//                 tabIndex={5}
-//                 value={values.content}
-//                 onChange={handleChange}
-//                 // onChange={(newContent) => {
-//                 //   console.log(newContent);
-//                 //   setContent(newContent);
-//                 // }}
-//               />
-
-//               {/* <textarea
-//                 className="blog_input"
-//                 rows="6"
-//                 cols="50"
-//                 type="text"
-//                 placeholder="Enter Description"
-//               /> */}
-//               <p>{content}</p>
-//             </div>
-//             <div>
-//               <label className="post-label">Upload Images</label>
-//               <input
-//                 className="blog_input"
-//                 type="file"
-//                 accept=".png ,
-//                 .jpg"
-//                 placeholder="your file"
-//               />
-//             </div>
-//             <div>
-//               <label className="post-label">Category</label>
-//               <select id="category" value={values.tags} onChange={handleChange} className="blog_input">
-//                 <option>Programming</option>
-//                 <option>ComputerProgramming</option>
-//                 <option>Technical</option>
-//                 <option>Lifestyle</option>
-//                 <option>News</option>
-//                 <option>Food</option>
-//                 <option>Other</option>
-//               </select>
-//             </div>
-//             <div>
-//               <button type="submit" className="btn-post">Submit</button>
-//             </div>
-//           </form>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default BlogPost;
 import "../styles/blogpost.css";
 import React, { useState, useRef } from "react";
 import JoditEditor from "jodit-react";
 import { useFormik } from "formik";
 import { storage } from "../firebase";
-import { ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
-// import firebase from 'firebase/app';
 import "firebase/storage";
 
 const BlogPost = () => {
-
   const [imageUpload, setImageUpload] = useState(null);
 
   const uploadImage = () => {
     if (imageUpload === null) return;
+
     const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
-    console.log("database" , imageRef)
-    uploadBytes(imageRef, imageUpload).then(() => {
-      alert("Image Uploaded");
+
+    return uploadBytes(imageRef, imageUpload).then(() => {
+      return getDownloadURL(imageRef);
     });
   };
 
@@ -144,7 +31,21 @@ const BlogPost = () => {
   };
 
   const blogSubmit = (values) => {
-    console.log(values);
+    uploadImage()
+      .then((url) => {
+        const finalData = {
+          title: values.title,
+          content: values.content,
+          file: url,
+          tags: values.tags,
+        };
+
+        console.log("final Data", finalData);
+        // Call your backend API with the form values and the image URL here
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const { values, handleSubmit, handleChange } = useFormik({
