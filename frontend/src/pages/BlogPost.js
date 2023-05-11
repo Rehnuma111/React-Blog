@@ -114,23 +114,22 @@ import "../styles/blogpost.css";
 import React, { useState, useRef } from "react";
 import JoditEditor from "jodit-react";
 import { useFormik } from "formik";
-import  storage from "../firebase";
-import { ref , uploadBytes} from "firebase/storage";
+import { storage } from "../firebase";
+import { ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
 // import firebase from 'firebase/app';
-import 'firebase/storage';
-
-
+import "firebase/storage";
 
 const BlogPost = () => {
-  
+
   const [imageUpload, setImageUpload] = useState(null);
 
   const uploadImage = () => {
     if (imageUpload === null) return;
-    const imageRef = ref(storage, `images/${imageUpload.namev + v4()}`);
-    uploadBytes(imageRef, imageUpload).then(()=>{
-      alert("Image Uploaded")
+    const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+    console.log("database" , imageRef)
+    uploadBytes(imageRef, imageUpload).then(() => {
+      alert("Image Uploaded");
     });
   };
 
@@ -140,6 +139,7 @@ const BlogPost = () => {
   const blogData = {
     title: "",
     content: "",
+    file: "",
     tags: "",
   };
 
@@ -191,11 +191,12 @@ const BlogPost = () => {
                 type="file"
                 accept=".png, .jpg"
                 placeholder="your file"
+                onClick={uploadImage}
                 onChange={(event) => {
                   setImageUpload(event.target.files[0]);
                 }}
               />
-              <button onclick={uploadImage}>Upload Image</button>
+              {/* <button type="submit" >Upload Image</button> */}
             </div>
             <div>
               <label className="post-label">Category</label>
