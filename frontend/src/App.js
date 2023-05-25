@@ -10,6 +10,7 @@ import Signup from "./pages/Signup";
 import BlogPost from "./pages/BlogPost";
 import UserProfile from "./pages/UserProfile";
 import  Pagination  from "./Component/Pagination";
+import AllBlogPost from "./pages/AllBlogPost";
 
 
 function App() {
@@ -19,14 +20,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/singlePost" element={<SinglePost />} />
+        <Route path="/singlePost/:id" element={<SinglePost />} />
         <Route path="/contact" element={<Contact />} /> 
         <Route path="/Login" element={<Login />} />   
         <Route path="/Signup" element={<Signup />} /> 
         <Route path="/blogpost" element={<BlogPost />} />
-        <Route path="/profile" element={<UserProfile/>} />
+        <Route path="/allblogpost/:category" element={<AllBlogPost />} />
 
-           
+        <Route path="/profile" element={<UserProfile/>} />
       </Routes>
       {/* <Footer /> */}
       {/* <Pagination/> */}

@@ -1,4 +1,4 @@
-import "../styles/blogpost.css";
+import "../styles/blogpost.css"; 
 import React, { useState, useRef } from "react";
 import JoditEditor from "jodit-react";
 import { useFormik } from "formik";
@@ -6,8 +6,18 @@ import { storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
 import "firebase/storage";
+import app_config from "../config";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+
+
+const Base_url = app_config.app_url;
 
 const BlogPost = () => {
+
+  const navigate =  useNavigate();
+
   const [imageUpload, setImageUpload] = useState(null);
 
   const uploadImage = () => {
@@ -21,8 +31,9 @@ const BlogPost = () => {
   };
 
   const [currentUser, setCurrentUser] = useState(
-    JSON.parse(sessionStorage.getItem("user"))
+    JSON.parse(localStorage.getItem("user"))
   );
+
   const blogData = {
     title: "",
     content: "",
@@ -36,12 +47,29 @@ const BlogPost = () => {
         const finalData = {
           title: values.title,
           content: values.content,
+          author: currentUser?._id,
           file: url,
           tags: values.tags,
         };
 
         console.log("final Data", finalData);
         // Call your backend API with the form values and the image URL here
+        axios
+          .post(Base_url + "/post/posts", finalData)
+          .then((res) => {
+            console.log("blog response", res.status);
+            if (res.status === 201) {
+              Swal.fire({
+                icon: "success",
+                title: "Success",
+                text: "Blog Post Sucessfully ",
+              });
+              navigate("/")
+            }
+          })
+          .catch((err) => {
+            console.log("error", err);
+          });
       })
       .catch((error) => {
         console.error(error);
@@ -82,7 +110,7 @@ const BlogPost = () => {
                   handleChange({ target: { id: "content", value } });
                 }}
               />
-              <div dangerouslySetInnerHTML={{ __html: values.content }}></div>
+              {/* <div dangerouslySetInnerHTML={{ __html: values.content }}></div> */}
             </div>
             {/* FILE */}
             <div>
@@ -110,9 +138,9 @@ const BlogPost = () => {
                 <option>Programming</option>
                 <option>ComputerProgramming</option>
                 <option>Technical</option>
-                <option>Lifestyle</option>
-                <option>News</option>
-                <option>Food</option>
+                <option>Javascript</option>
+                <option>React JS</option>
+                <option>News </option>
                 <option>Other</option>
               </select>
             </div>

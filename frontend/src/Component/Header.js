@@ -17,10 +17,7 @@ const Header = () => {
               <li>
                 <Link to="/">Blog</Link>
               </li>
-              <li>
-                <Link to="/singlePost">Single Post</Link>
-              </li>
-
+              
               <li>
                 <Link to="/about">AboutUs</Link>
               </li>
@@ -30,6 +27,9 @@ const Header = () => {
               <li>
                 <Link to="/login">Login</Link>
               </li> 
+              <li>
+                <Link to="/Signup">Signup</Link>
+              </li>
               <li>
                 <Link to="/blogpost">Write</Link>
               </li>

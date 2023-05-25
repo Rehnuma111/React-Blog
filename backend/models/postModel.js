@@ -10,11 +10,18 @@ const PostSchema = mongoose.Schema({
   },
   author: {
     type: mongoose.Types.ObjectId,
-    ref: "user",
+    ref: "User",
+  },
+  file: {
+    type: String,
   },
   tags: {
     type: String,
   },
+  comments: [{
+    type: mongoose.Types.ObjectId,
+    ref: 'Comment'
+  }],
   createdAt: {
     type: Date,
     default: new Date(),
